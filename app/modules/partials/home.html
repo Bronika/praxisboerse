@@ -1,0 +1,111 @@
+<div ng-app="Home" ng-controller="HomeController">
+
+    <script type="text/ng-template" id="myModalContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title">{{company.companyName}}</h3>
+        </div>
+        <div class="modal-body">
+            <dl class="dl-horizontal">
+                <dt>Beschreibung</dt>
+                <dd>{{company.description}}</dd>
+                <dt>Website</dt>
+                <dd><a href="{{company.website}}" target="_blank">{{company.website}}</a></dd>
+            </dl>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="cancel()">OK</button>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="notices.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Merkzettel</h3>
+        </div>
+        <div class="modal-body">
+            <table class="table table-striped table-condensed table-hover">
+                <thead>
+                <tr>
+                    <th class="description">Beschreibung&nbsp;<a ng-click=""><i class="icon-sort"></i></a></th>
+                    <th class="description">Firmenname&nbsp;<a ng-click=""><i class="icon-sort"></i></a></th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr ng-repeat="item in notepad.offers">
+                    <td>{{ item.shortDescription }}</td>
+                    <td>{{ notepad.companies[item.companyId].companyName }}</td>
+                    <td><input type="checkbox" ng-model="item.onNotepad" ng-change="updateNotices(item)"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="cancel()">OK</button>
+        </div>
+    </script>
+
+    <h1>Willkommen auf der Praxisbörse!</h1>
+    <button class="btn btn-link" ng-click="showNotices()">
+        Merkzettel
+    </button>
+    <button class="btn btn-link" ng-click="logout()">
+        Logout
+    </button>
+
+    <div ng-repeat="item in offerType">
+        <button ng-click=getData(item.shortname) class="btn btn-default"> {{item.name}}</button>
+    </div>
+    <hr>
+    <div class="input-append">
+        <input type="text" ng-model="query" ng-change="search()" class="input-large search-query" placeholder="Suche">
+        <span class="add-on"><i class="icon-search"></i></span>
+    </div>
+
+    <div class="input-append">
+        <input type="text" ng-model="queryCountry" ng-change="searchCountry()" class="input-large search-query"
+               placeholder="Suche nach Länder">
+        <span class="add-on"><i class="icon-search"></i></span>
+    </div>
+
+    <table class="table table-striped table-condensed table-hover">
+        <thead>
+        <tr>
+            <th class="description">Beschreibung&nbsp;<a ng-click=""><i class="icon-sort"></i></a></th>
+            <th class="description">Firmenname&nbsp;<a ng-click=""><i class="icon-sort"></i></a></th>
+            <th class="description">Land&nbsp;<a ng-click=""><i class="icon-sort"></i></a></th>
+        </tr>
+        </thead>
+        <tfoot>
+        <td colspan="6">
+            <div class="pagination pull-right">
+                <ul class="pager">
+                    <li ng-class="{disabled: currentPage == 0}">
+                        <a href ng-click="prevPage()">« Prev</a>
+                    </li>
+                    <li ng-repeat="n in range(pagedItems.length)"
+                        ng-class="{active: n == currentPage}"
+                        ng-click="setPage()">
+                        <a href ng-bind="n + 1">1</a>
+                    </li>
+                    <li ng-class="{disabled: currentPage == pagedItems.length - 1}">
+                        <a href ng-click="nextPage()">Next »</a>
+                    </li>
+                </ul>
+            </div>
+        </td>
+        </tfoot>
+        <tbody>
+        <tr ng-repeat="item in pagedItems[currentPage]|filterCountry:queryCountry">
+            <td>{{ item.shortDescription }}</td>
+            <td>
+                <button class="btn btn-link" ng-click="showCompany(getCompany(item.companyId))">
+                    {{getCompany(item.companyId).companyName}}
+                </button>
+            </td>
+            <td>{{item.country.name}}</td>
+            <td><input type="checkbox" ng-model="item.onNotepad" ng-change="updateNotices(item)"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+

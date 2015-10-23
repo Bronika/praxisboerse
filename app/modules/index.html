@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app="BasicHttpAuthExample">
+
+<head>
+    <meta charset="utf-8"/>
+    <!--   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.13/angular.js"></script>-->
+    <!--<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.0.js"></script>-->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <title>Praxisbörse</title>
+</head>
+
+<body>
+
+<div ng-view></div>
+
+</body>
+<script src='../bower_components/angular/angular.js'></script>
+<script src='../bower_components/angular-route/angular-route.js'></script>
+<script src='../bower_components/angular-cookies/angular-cookies.js'></script>
+<script src='../bower_components/angular-loader/angular-loader.js'></script>
+<script src='../bower_components/angular-bootstrap/ui-bootstrap.js'></script>
+<script src='../bower_components/angular-bootstrap/ui-bootstrap-tpls.js'></script>
+
+<script src="../modules/app.js"></script>
+<script src="../modules/authentication/loginCtrl.js"></script>
+<script src="../modules/home/homeCtrl.js"></script>
+<script src="../modules/authentication/loginServices.js"></script>
+
+<script src="../components/version/version.js"></script>
+<script src="../components/version/version-directive.js"></script>
+<script src="../components/version/interpolate-filter.js"></script>
+</html>
